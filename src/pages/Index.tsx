@@ -1,13 +1,34 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useEffect, useState } from 'react';
+import MainLayout from '@/components/layout/MainLayout';
+import LiveMatchesSection from '@/components/home/LiveMatchesSection';
+import UpcomingFixturesSection from '@/components/home/UpcomingFixturesSection';
+import { getLiveFixtures, getUpcomingFixtures } from '@/lib/mockData';
 
 const Index = () => {
+  const [liveFixtures, setLiveFixtures] = useState(getLiveFixtures());
+  const [upcomingFixtures, setUpcomingFixtures] = useState(getUpcomingFixtures());
+  
+  // Simulate real-time updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLiveFixtures(getLiveFixtures());
+      setUpcomingFixtures(getUpcomingFixtures());
+    }, 60000); // Update every minute
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <MainLayout 
+      title="Live Scores Hub"
+      subtitle="Today's matches and predictions"
+    >
+      <div className="space-y-6">
+        <LiveMatchesSection fixtures={liveFixtures} />
+        <UpcomingFixturesSection fixtures={upcomingFixtures} />
       </div>
-    </div>
+    </MainLayout>
   );
 };
 
