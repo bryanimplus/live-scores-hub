@@ -1,11 +1,11 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Badge from '@/components/ui/Badge';
+import { Badge } from "@/components/ui/badge";
 import AnimatedCard from '@/components/ui/AnimatedCard';
 import { Fixture, formatMatchDate, getTimeUntilMatch } from '@/lib/mockData';
 import { cn } from '@/lib/utils';
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Clock, Star } from 'lucide-react';
 
 interface FixtureCardProps {
   fixture: Fixture;
@@ -14,7 +14,6 @@ interface FixtureCardProps {
 
 const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
   const navigate = useNavigate();
-  
   const isLive = fixture.status === 'live';
   
   const handleClick = () => {
@@ -37,9 +36,9 @@ const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
             {fixture.competition}
           </span>
           {isLive ? (
-            <Badge variant="live" dot pulse>LIVE {fixture.minute}'</Badge>
+            <Badge variant="destructive" className="animate-pulse">LIVE {fixture.minute}'</Badge>
           ) : (
-            <Badge variant="soon" size="sm" className="flex items-center">
+            <Badge variant="secondary" className="flex items-center">
               <Clock className="w-3 h-3 mr-1" />
               {getTimeUntilMatch(fixture.startTime)}
             </Badge>
@@ -47,7 +46,7 @@ const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
         </div>
         
         {/* Teams Section */}
-        <div className="grid grid-cols-7 gap-2 items-center bg-gray-50 dark:bg-gray-900/40 p-3 rounded-xl">
+        <div className="grid grid-cols-7 gap-2 items-center bg-gray-50 dark:bg-gray-900/40 p-3 rounded-xl mb-3">
           {/* Home Team */}
           <div className="col-span-3 flex flex-col items-center text-center">
             <div className="w-14 h-14 mb-2 flex items-center justify-center bg-white dark:bg-gray-800/50 rounded-full p-1">
@@ -92,29 +91,20 @@ const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
           </div>
         </div>
         
-        {/* Additional Info */}
-        {!isLive && (
-          <div className="mt-3 pt-3 border-t border-border text-xs flex items-center justify-center text-muted-foreground">
-            <Calendar className="w-3 h-3 mr-1" />
-            {formatMatchDate(fixture.startTime)}
-          </div>
-        )}
-        
-        {fixture.prediction && (
-          <div className="mt-3 pt-3 border-t border-border">
-            <div className="text-xs text-muted-foreground mb-1">Prediction</div>
-            <div className="flex items-center space-x-1">
-              <div className="h-2 bg-primary rounded-l-full" style={{ width: `${fixture.prediction.homeWin}%` }}></div>
-              <div className="h-2 bg-gray-400" style={{ width: `${fixture.prediction.draw}%` }}></div>
-              <div className="h-2 bg-secondary rounded-r-full" style={{ width: `${fixture.prediction.awayWin}%` }}></div>
-            </div>
-            <div className="flex justify-between mt-1 text-xs">
-              <span>{fixture.prediction.homeWin}%</span>
-              <span>Draw: {fixture.prediction.draw}%</span>
-              <span>{fixture.prediction.awayWin}%</span>
-            </div>
-          </div>
-        )}
+        {/* Predictions & Value Bets */}
+        <div className="flex gap-2 mt-3">
+          {fixture.prediction && (
+            <Badge variant="outline" className="flex items-center gap-1">
+              <Star className="w-3 h-3" />
+              {fixture.prediction.recommended}
+            </Badge>
+          )}
+          {fixture.valueBet && (
+            <Badge variant="secondary" className="flex items-center gap-1">
+              Value: +{fixture.valueBet.value}%
+            </Badge>
+          )}
+        </div>
       </div>
     </AnimatedCard>
   );

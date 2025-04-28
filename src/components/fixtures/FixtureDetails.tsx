@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import Badge from '@/components/ui/Badge';
+import { Badge } from "@/components/ui/badge";
 import { Fixture, getTimeUntilMatch, formatMatchDate } from '@/lib/mockData';
 import { BarChart, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +13,6 @@ const FixtureDetails: React.FC<FixtureDetailsProps> = ({ fixture }) => {
   const [currentMinute, setCurrentMinute] = useState<number | undefined>(fixture.minute);
   const isLive = fixture.status === 'live';
   
-  // Simulate minute updates for live matches
   useEffect(() => {
     if (!isLive) return;
     
