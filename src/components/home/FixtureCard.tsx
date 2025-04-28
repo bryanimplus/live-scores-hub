@@ -2,6 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Badge } from "@/components/ui/badge";
+import { CustomBadge } from "@/components/ui/CustomBadge";
 import AnimatedCard from '@/components/ui/AnimatedCard';
 import { Fixture, formatMatchDate, getTimeUntilMatch } from '@/lib/mockData';
 import { cn } from '@/lib/utils';
@@ -36,12 +37,12 @@ const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
             {fixture.competition}
           </span>
           {isLive ? (
-            <Badge variant="destructive" className="animate-pulse">LIVE {fixture.minute}'</Badge>
+            <CustomBadge variant="live" className="animate-pulse">LIVE {fixture.minute}'</CustomBadge>
           ) : (
-            <Badge variant="secondary" className="flex items-center">
+            <CustomBadge variant="soon" className="flex items-center">
               <Clock className="w-3 h-3 mr-1" />
               {getTimeUntilMatch(fixture.startTime)}
-            </Badge>
+            </CustomBadge>
           )}
         </div>
         
@@ -94,15 +95,15 @@ const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
         {/* Predictions & Value Bets */}
         <div className="flex gap-2 mt-3">
           {fixture.prediction && (
-            <Badge variant="outline" className="flex items-center gap-1">
+            <CustomBadge variant="success" className="flex items-center gap-1">
               <Star className="w-3 h-3" />
               {fixture.prediction.recommended}
-            </Badge>
+            </CustomBadge>
           )}
           {fixture.valueBet && (
-            <Badge variant="secondary" className="flex items-center gap-1">
+            <CustomBadge variant="warning" className="flex items-center gap-1">
               Value: +{fixture.valueBet.value}%
-            </Badge>
+            </CustomBadge>
           )}
         </div>
       </div>

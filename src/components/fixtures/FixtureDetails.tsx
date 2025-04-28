@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Badge } from "@/components/ui/badge";
+import { CustomBadge } from "@/components/ui/CustomBadge";
 import { Fixture, getTimeUntilMatch, formatMatchDate } from '@/lib/mockData';
 import { BarChart, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -42,9 +44,9 @@ const FixtureDetails: React.FC<FixtureDetailsProps> = ({ fixture }) => {
         </div>
         
         {isLive ? (
-          <Badge variant="live" dot pulse size="lg">LIVE {currentMinute}'</Badge>
+          <CustomBadge variant="live" dot pulse size="lg">LIVE {currentMinute}'</CustomBadge>
         ) : (
-          <Badge variant="soon" size="lg">{getTimeUntilMatch(fixture.startTime)}</Badge>
+          <CustomBadge variant="soon" size="lg">{getTimeUntilMatch(fixture.startTime)}</CustomBadge>
         )}
       </div>
       
@@ -139,9 +141,9 @@ const FixtureDetails: React.FC<FixtureDetailsProps> = ({ fixture }) => {
             <div className="mt-4 pt-4 border-t border-border">
               <div className="text-sm text-muted-foreground">Recommended Bet</div>
               <div className="flex items-center text-base font-medium">
-                <Badge variant="success" className="mr-2">
+                <CustomBadge variant="success" className="mr-2">
                   {fixture.prediction.recommended}
-                </Badge>
+                </CustomBadge>
               </div>
             </div>
           )}

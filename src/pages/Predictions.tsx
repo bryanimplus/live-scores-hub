@@ -3,7 +3,7 @@ import React from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { fixtures } from '@/lib/mockData';
 import AnimatedCard from '@/components/ui/AnimatedCard';
-import Badge from '@/components/ui/Badge';
+import { CustomBadge } from '@/components/ui/CustomBadge';
 import { useNavigate } from 'react-router-dom';
 
 const Predictions = () => {
@@ -28,9 +28,9 @@ const Predictions = () => {
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm text-muted-foreground">{fixture.competition}</span>
                 {fixture.status === 'live' ? (
-                  <Badge variant="live" dot pulse>LIVE</Badge>
+                  <CustomBadge variant="live" dot pulse>LIVE</CustomBadge>
                 ) : (
-                  <Badge variant="default" size="sm">Prediction</Badge>
+                  <CustomBadge variant="default" size="sm">Prediction</CustomBadge>
                 )}
               </div>
               
@@ -82,7 +82,7 @@ const Predictions = () => {
                 <div className="mt-3 pt-3 border-t border-border">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Recommended</span>
-                    <Badge variant="success">{fixture.prediction.recommended}</Badge>
+                    <CustomBadge variant="success">{fixture.prediction.recommended}</CustomBadge>
                   </div>
                 </div>
               )}

@@ -2,7 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-type BadgeProps = {
+type CustomBadgeProps = {
   variant?: 'live' | 'soon' | 'success' | 'warning' | 'default';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
@@ -11,14 +11,14 @@ type BadgeProps = {
   pulse?: boolean;
 };
 
-const Badge = ({
+export const CustomBadge = ({
   variant = 'default',
   size = 'md',
   children,
   className,
   dot = false,
   pulse = false,
-}: BadgeProps) => {
+}: CustomBadgeProps) => {
   // Size classes
   const sizeClasses = {
     sm: 'text-xs py-0.5 px-2',
@@ -64,4 +64,4 @@ const Badge = ({
   );
 };
 
-export default Badge;
+export default CustomBadge;
