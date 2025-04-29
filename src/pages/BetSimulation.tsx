@@ -4,7 +4,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import { getFixtureById, fixtures } from '@/lib/mockData';
 import { useSearchParams } from 'react-router-dom';
 import AnimatedCard from '@/components/ui/AnimatedCard';
-import Badge from '@/components/ui/Badge';
+import { CustomBadge } from '@/components/ui/CustomBadge';
 
 const BetSimulation = () => {
   const [searchParams] = useSearchParams();
@@ -87,9 +87,9 @@ const BetSimulation = () => {
           {/* Selected Fixture Display */}
           <div className="glass-card rounded-2xl p-4 mb-6">
             <div className="flex justify-between items-center">
-              <Badge variant={selectedFixture.status === 'live' ? 'live' : 'soon'} className="mb-2">
+              <CustomBadge variant={selectedFixture.status === 'live' ? 'live' : 'soon'} className="mb-2">
                 {selectedFixture.status === 'live' ? 'LIVE' : 'Upcoming'}
-              </Badge>
+              </CustomBadge>
               <button 
                 className="text-sm text-primary"
                 onClick={() => setSelectedFixture(undefined)}
@@ -217,7 +217,7 @@ const BetSimulation = () => {
                   <div className="text-sm text-muted-foreground mb-2">Recommended Value Bet</div>
                   <div className="flex items-center justify-between">
                     <span className="font-medium">{selectedFixture.valueBet.selection}</span>
-                    <Badge variant="warning">+{selectedFixture.valueBet.value}% Value</Badge>
+                    <CustomBadge variant="warning">+{selectedFixture.valueBet.value}% Value</CustomBadge>
                   </div>
                 </div>
               )}

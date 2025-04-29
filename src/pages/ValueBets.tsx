@@ -1,9 +1,8 @@
-
 import React from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { fixtures } from '@/lib/mockData';
 import AnimatedCard from '@/components/ui/AnimatedCard';
-import Badge from '@/components/ui/Badge';
+import { CustomBadge } from '@/components/ui/CustomBadge';
 import { useNavigate } from 'react-router-dom';
 
 const ValueBets = () => {
@@ -32,9 +31,9 @@ const ValueBets = () => {
             <div className="p-4">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm text-muted-foreground">{fixture.competition}</span>
-                <Badge variant="warning">
+                <CustomBadge variant="warning">
                   +{fixture.valueBet?.value}% Value
-                </Badge>
+                </CustomBadge>
               </div>
               
               <div className="flex items-center justify-between mb-4">
