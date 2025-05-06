@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Badge } from "@/components/ui/badge";
 import { CustomBadge } from "@/components/ui/CustomBadge";
 import AnimatedCard from '@/components/ui/AnimatedCard';
 import { Fixture, formatMatchDate, getTimeUntilMatch } from '@/lib/mockData';
@@ -16,6 +15,7 @@ interface FixtureCardProps {
 const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
   const navigate = useNavigate();
   const isLive = fixture.status === 'live';
+  const isUpcoming = fixture.status === 'upcoming';
   
   const handleClick = () => {
     navigate(`/fixture/${fixture.id}`);
@@ -38,11 +38,13 @@ const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
           </span>
           {isLive ? (
             <CustomBadge variant="live" className="animate-pulse">LIVE {fixture.minute}'</CustomBadge>
-          ) : (
+          ) : isUpcoming ? (
             <CustomBadge variant="soon" className="flex items-center">
               <Clock className="w-3 h-3 mr-1" />
               {getTimeUntilMatch(fixture.startTime)}
             </CustomBadge>
+          ) : (
+            <span className="text-xs text-muted-foreground">Completed</span>
           )}
         </div>
         
@@ -65,7 +67,7 @@ const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
           
           {/* Score */}
           <div className="col-span-1 flex items-center justify-center">
-            {isLive ? (
+            {isLive || fixture.status === 'completed' ? (
               <div className="text-xl font-bold bg-white dark:bg-gray-800 shadow-sm px-2 py-1 rounded-lg">
                 {fixture.homeScore}-{fixture.awayScore}
               </div>

@@ -7,41 +7,64 @@ import { useNavigate } from 'react-router-dom';
 
 interface LiveMatchesSectionProps {
   fixtures: Fixture[];
+  showLiveLabel?: boolean;
+  dateLabel?: string;
 }
 
-const LiveMatchesSection: React.FC<LiveMatchesSectionProps> = ({ fixtures }) => {
+const LiveMatchesSection: React.FC<LiveMatchesSectionProps> = ({ 
+  fixtures,
+  showLiveLabel = true,
+  dateLabel = ""
+}) => {
   const navigate = useNavigate();
-  const hasLiveMatches = fixtures.length > 0;
+  const hasFixtures = fixtures.length > 0;
+  
+  // Separate live fixtures
+  const liveFixtures = fixtures.filter(fixture => fixture.status === 'live');
+  const hasLiveMatches = liveFixtures.length > 0;
+  
+  // Upcoming fixtures
+  const upcomingFixtures = fixtures.filter(fixture => fixture.status === 'upcoming');
+  
+  // Completed fixtures
+  const completedFixtures = fixtures.filter(fixture => fixture.status === 'completed');
+
+  // Sort fixtures by status and start time
+  const sortedFixtures = [
+    ...liveFixtures,
+    ...upcomingFixtures,
+    ...completedFixtures
+  ];
 
   return (
     <section className="mb-8 animate-fade-in">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-medium flex items-center">
-          <span className={`inline-block w-2 h-2 rounded-full ${hasLiveMatches ? 'bg-live animate-pulse-live' : 'bg-muted'} mr-2`}></span>
-          Live Matches
+          {showLiveLabel && hasLiveMatches && (
+            <span className="inline-block w-2 h-2 rounded-full bg-live animate-pulse-live mr-2"></span>
+          )}
+          {dateLabel ? `${dateLabel} Fixtures` : 'Fixtures'}
         </h2>
-        {hasLiveMatches && (
-          <button 
-            className="text-sm font-medium text-primary hover:underline"
-            onClick={() => navigate('/predictions')}
-          >
-            See all
-          </button>
-        )}
+        <button 
+          className="text-sm font-medium text-primary hover:underline"
+          onClick={() => navigate('/predictions')}
+        >
+          See all
+        </button>
       </div>
       
-      {hasLiveMatches ? (
+      {hasFixtures ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {fixtures.map((fixture) => (
+          {sortedFixtures.map((fixture) => (
             <FixtureCard key={fixture.id} fixture={fixture} />
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <EmptyFixtureCard 
-            type="live" 
-            message="There are currently no live matches" 
-            actionText="View upcoming matches"
+            type="upcoming" 
+            message="No fixtures found for this date" 
+            actionText="Try another date"
             onActionClick={() => navigate('/predictions')}
           />
         </div>
