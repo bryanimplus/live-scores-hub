@@ -5,7 +5,7 @@ import { CustomBadge } from "@/components/ui/CustomBadge";
 import AnimatedCard from '@/components/ui/AnimatedCard';
 import { Fixture, formatMatchDate, getTimeUntilMatch } from '@/lib/mockData';
 import { cn } from '@/lib/utils';
-import { Calendar, Clock, Star } from 'lucide-react';
+import { Calendar, Clock, Star, CirclePercent } from 'lucide-react';
 
 interface FixtureCardProps {
   fixture: Fixture;
@@ -95,7 +95,7 @@ const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
         </div>
         
         {/* Predictions & Value Bets */}
-        <div className="flex gap-2 mt-3">
+        <div className="flex flex-wrap gap-2 mt-3">
           {fixture.prediction && (
             <CustomBadge variant="success" className="flex items-center gap-1">
               <Star className="w-3 h-3" />
@@ -104,7 +104,8 @@ const FixtureCard: React.FC<FixtureCardProps> = ({ fixture, className }) => {
           )}
           {fixture.valueBet && (
             <CustomBadge variant="warning" className="flex items-center gap-1">
-              Value: +{fixture.valueBet.value}%
+              <CirclePercent className="w-3 h-3" />
+              +{fixture.valueBet.value}% Value
             </CustomBadge>
           )}
         </div>
