@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { isSameDay, parseISO } from 'date-fns';
 import MainLayout from '@/components/layout/MainLayout';
@@ -52,36 +51,24 @@ const Index = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
           {/* Main Content - Left Column */}
           <div className="space-y-6">
-            {/* Show live matches only if they exist and we're on today's date */}
-            {isSameDay(selectedDate, new Date()) && liveFixtures.length > 0 && (
+            {/* Show live matches section regardless, component handles empty state */}
+            {isSameDay(selectedDate, new Date()) && (
               <LiveMatchesSection fixtures={liveFixtures} />
             )}
             
             {/* Show upcoming/past fixtures for the selected date */}
-            {upcomingFixtures.length > 0 ? (
-              <UpcomingFixturesSection 
-                fixtures={upcomingFixtures} 
-                title={isSameDay(selectedDate, new Date()) ? "Today's Predictions" : "Predictions"}
-              />
-            ) : (
-              <div className="text-center text-muted-foreground py-8 bg-secondary/20 rounded-2xl">
-                No fixtures scheduled for this date
-              </div>
-            )}
+            <UpcomingFixturesSection 
+              fixtures={upcomingFixtures} 
+              title={isSameDay(selectedDate, new Date()) ? "Today's Predictions" : "Predictions"}
+            />
           </div>
           
           {/* Value Bets - Right Column */}
           <div className="space-y-6">
-            {valueBets.length > 0 ? (
-              <ValueBetsSection 
-                fixtures={valueBets} 
-                title={isSameDay(selectedDate, new Date()) ? "Today's Value Bets" : "Value Bets"} 
-              />
-            ) : (
-              <div className="text-center text-muted-foreground py-8 bg-secondary/20 rounded-2xl">
-                No value bets found for this date
-              </div>
-            )}
+            <ValueBetsSection 
+              fixtures={valueBets} 
+              title={isSameDay(selectedDate, new Date()) ? "Today's Value Bets" : "Value Bets"} 
+            />
             
             {/* Performance Stats Card */}
             <Card className="neo-card">
