@@ -1,27 +1,49 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import FixtureCard from './FixtureCard';
 import { Fixture } from '@/lib/mockData';
-import { Calendar } from 'lucide-react';
+import { Calendar, LineChart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface UpcomingFixturesSectionProps {
   fixtures: Fixture[];
+  title?: string;
+  limit?: number;
 }
 
-const UpcomingFixturesSection: React.FC<UpcomingFixturesSectionProps> = ({ fixtures }) => {
+const UpcomingFixturesSection: React.FC<UpcomingFixturesSectionProps> = ({ 
+  fixtures, 
+  title = "Upcoming Fixtures",
+  limit 
+}) => {
+  const navigate = useNavigate();
+  
   if (fixtures.length === 0) {
     return null;
   }
 
+  const limitedFixtures = limit ? fixtures.slice(0, limit) : fixtures;
+
   return (
-    <section className="mb-8 animate-fade-in">
-      <h2 className="text-xl font-medium mb-4 flex items-center">
-        <Calendar className="w-5 h-5 mr-2 text-muted-foreground" />
-        Upcoming Fixtures
-      </h2>
+    <section className="animate-fade-in">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-medium flex items-center">
+          <LineChart className="w-5 h-5 mr-2 text-primary" />
+          {title}
+        </h2>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => navigate('/predictions')}
+          className="text-sm font-medium text-primary"
+        >
+          See all
+        </Button>
+      </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-        {fixtures.map((fixture) => (
+      <div className="space-y-4">
+        {limitedFixtures.map((fixture) => (
           <FixtureCard 
             key={fixture.id} 
             fixture={fixture} 

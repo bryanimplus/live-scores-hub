@@ -10,6 +10,7 @@ import Predictions from "./pages/Predictions";
 import ValueBets from "./pages/ValueBets";
 import BetSimulation from "./pages/BetSimulation";
 import Education from "./pages/Education";
+import Performance from "./pages/Performance";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/value-bets" element={<ValueBets />} />
           <Route path="/bet-simulation" element={<BetSimulation />} />
           <Route path="/education" element={<Education />} />
+          <Route path="/performance" element={<Performance />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

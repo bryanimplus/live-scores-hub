@@ -8,8 +8,8 @@ const navItems = [
   { name: 'Home', path: '/', icon: Home },
   { name: 'Predictions', path: '/predictions', icon: LineChart },
   { name: 'Value Bets', path: '/value-bets', icon: ThumbsUp },
-  { name: 'Simulator', path: '/bet-simulation', icon: BarChart4 },
-  { name: 'Learn', path: '/education', icon: BookOpen },
+  { name: 'Performance', path: '/performance', icon: BarChart4 },
+  { name: 'About', path: '/education', icon: BookOpen },
 ];
 
 const Navigation = () => {
