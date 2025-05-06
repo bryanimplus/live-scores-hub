@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { isSameDay, parseISO } from 'date-fns';
 import MainLayout from '@/components/layout/MainLayout';
@@ -5,9 +6,9 @@ import LiveMatchesSection from '@/components/home/LiveMatchesSection';
 import UpcomingFixturesSection from '@/components/home/UpcomingFixturesSection';
 import ValueBetsSection from '@/components/home/ValueBetsSection';
 import FixtureCalendar from '@/components/home/FixtureCalendar';
-import { getLiveFixtures, getUpcomingFixtures, fixtures } from '@/lib/mockData';
 import { Card, CardContent } from '@/components/ui/card';
 import { CustomBadge } from '@/components/ui/CustomBadge';
+import { getLiveFixtures, getUpcomingFixtures, fixtures } from '@/lib/mockData';
 
 const Index = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -42,15 +43,16 @@ const Index = () => {
       subtitle="Today's Fixtures & Predictions"
     >
       <div className="space-y-6">
+        {/* Enhanced Calendar Component */}
         <FixtureCalendar 
           selected={selectedDate}
           onSelect={setSelectedDate}
           compact={true}
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-          {/* Main Content - Left Column */}
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          {/* Main Content - Left Column (3/5) */}
+          <div className="lg:col-span-3 space-y-6">
             {/* Show live matches section regardless, component handles empty state */}
             {isSameDay(selectedDate, new Date()) && (
               <LiveMatchesSection fixtures={liveFixtures} />
@@ -63,8 +65,8 @@ const Index = () => {
             />
           </div>
           
-          {/* Value Bets - Right Column */}
-          <div className="space-y-6">
+          {/* Value Bets & Stats - Right Column (2/5) */}
+          <div className="lg:col-span-2 space-y-6">
             <ValueBetsSection 
               fixtures={valueBets} 
               title={isSameDay(selectedDate, new Date()) ? "Today's Value Bets" : "Value Bets"} 

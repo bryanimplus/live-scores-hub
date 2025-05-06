@@ -2,10 +2,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import FixtureCard from './FixtureCard';
+import EmptyFixtureCard from './EmptyFixtureCard';
 import { Fixture } from '@/lib/mockData';
-import { Calendar, LineChart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { LineChart } from 'lucide-react';
 
 interface UpcomingFixturesSectionProps {
   fixtures: Fixture[];
@@ -36,16 +35,12 @@ const UpcomingFixturesSection: React.FC<UpcomingFixturesSectionProps> = ({
           <LineChart className="w-5 h-5 mr-2 text-primary" />
           {title}
         </h2>
-        {hasFixtures && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigate('/predictions')}
-            className="text-sm font-medium text-primary"
-          >
-            See all
-          </Button>
-        )}
+        <button
+          className="text-sm font-medium text-primary hover:underline"
+          onClick={() => navigate('/predictions')}
+        >
+          See all
+        </button>
       </div>
       
       {hasFixtures ? (
@@ -58,12 +53,12 @@ const UpcomingFixturesSection: React.FC<UpcomingFixturesSectionProps> = ({
           ))}
         </div>
       ) : (
-        <Alert variant="default" className="bg-secondary/20 border-secondary/30">
-          <AlertDescription className="flex items-center justify-center py-4 text-muted-foreground">
-            <Calendar className="w-4 h-4 mr-2" />
-            No fixtures found for this date. Try selecting a different date.
-          </AlertDescription>
-        </Alert>
+        <EmptyFixtureCard 
+          type="upcoming"
+          message="No fixtures found for this date"
+          actionText="Try another date"
+          onActionClick={() => navigate('/predictions')}
+        />
       )}
     </section>
   );
